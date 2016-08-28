@@ -48,6 +48,7 @@ class MicrosoftFetcher(RootStoreFetcher):
                 output.write(l)
                 output.write("\n")
             output.write("-----END CERTIFICATE-----\n\n")
+            output.flush()
 
 
 if __name__ == "__main__":
