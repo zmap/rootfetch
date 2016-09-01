@@ -2,7 +2,7 @@ from setuptools import setup
 import zschema
 
 setup(
-    name = "roofetch",
+    name = "rootfetch",
     description = "command line program for downloading various certificate root stores",
     version = zschema.__version__,
     license = zschema.__license__,
