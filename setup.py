@@ -4,10 +4,10 @@ import zschema
 setup(
     name = "rootfetch",
     description = "command line program for downloading various certificate root stores",
-    version = zschema.__version__,
-    license = zschema.__license__,
-    author = zschema.__author__,
-    author_email = zschema.__email__,
+    version = rootfetch.__version__,
+    license = rootfetch.__license__,
+    author = rootfetch.__author__,
+    author_email = rootfetch.__email__,
     keywords = "python json schema bigquery elastic search",
 
     install_requires = [
@@ -20,7 +20,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'zschema = footfetch.__main__:main',
+            'rootfetch = footfetch.__main__:main',
         ]
     }
 )
