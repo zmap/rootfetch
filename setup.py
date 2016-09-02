@@ -1,5 +1,5 @@
 from setuptools import setup
-import zschema
+import rootfetch
 
 setup(
     name = "rootfetch",
