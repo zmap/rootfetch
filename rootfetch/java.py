@@ -4,8 +4,10 @@ from rootfetch.base import *
 
 class JavaFetcher(RootStoreFetcher):
 
+
+    TEST_COMMAND = """keytool -list -v -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass 'changeit'"""
     LIST_CERTS_COMMAND = """keytool -list -v -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass 'changeit' | grep "Alias name:" | awk '{print $3}'"""
-    GET_CERT_COMMAND = """keytool -export -alias %s -file %s -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass 'changeit'"""
+    GET_CERT_COMMAND = """keytool -export -alias %s -file %s -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass 'changeit' 2> /dev/null"""
 
     @staticmethod
     def split(input, size):
@@ -19,6 +21,9 @@ class JavaFetcher(RootStoreFetcher):
         for l in self.split(stream, 64):
             yield l
         yield "-----END CERTIFICATE-----"
+
+    def test_java(self):
+        subprocess.check_output(self.TEST_COMMAND, shell=True)
 
     def get_certs(self):
         o = subprocess.check_output(self.LIST_CERTS_COMMAND, shell=True)
@@ -34,6 +39,7 @@ class JavaFetcher(RootStoreFetcher):
         return extract_path
 
     def fetch(self, output):
+        self.test_java()
         certs = self.get_certs()
         if not certs:
             raise Exception("Unable to dump cacerts store. Is JAVA_HOME set correctly?")
