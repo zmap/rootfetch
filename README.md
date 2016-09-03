@@ -20,3 +20,12 @@ Microsoft:
 
  - Install cabextract (e.g., `sudo apt-get install cabextract`)
  - Install perl and following CPAN modules: Convert::ASN1, JSON, DateTime (e.g., `sudo cpan Convert::ASN1`)
+
+Mozilla:
+
+ - Install extract-nss-root-certs to $PATH. Linux and Mac OS versions are included but not installed
+
+Apple:
+
+ - Install Beautiful Soup (`sudo python setup.py develop`)
+
