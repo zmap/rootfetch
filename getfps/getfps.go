@@ -11,8 +11,7 @@ import (
 )
 
 func main() {
-	path := os.Args[1]
-	data, err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(os.Args[1])
 	if err != nil {
 		fmt.Println("unable to read specified file")
 		os.Exit(1)
@@ -27,10 +26,11 @@ func main() {
 			continue
 		}
 		cert, err := x509.ParseCertificate(block.Bytes)
+		if err != nil {
+			fmt.Println("unable to parse certificates")
+			os.Exit(1)
+		}
 		fmt.Println("%", cert.Subject.String())
 		fmt.Println(hex.EncodeToString(x509.SHA256Fingerprint(cert.Raw)))
-		if err != nil {
-			continue
-		}
 	}
 }

@@ -18,25 +18,9 @@ class CTFetcher(RootStoreFetcher):
         for start in range(0, len(input), size):
             yield input[start:start+size]
 
-    def get_tarballs(self):
-        response = urllib2.urlopen(self.LIST_OF_TARBALLS_URL)
-        html = response.read()
-        soup = BeautifulSoup(html, "html.parser")
-        for row in soup.body.find_all("table")[0].find_all("tr"):
-            try:
-                cells = row.find_all("td")
-                if not cells:
-                    continue
-                href = cells[1].find_all("a")[0]["href"]
-                if href.startswith("security_certificates"):
-                    yield href
-            except:
-                pass
-
     def make_pem(self, raw):
-        stream = base64.b64encode(raw)
         yield "-----BEGIN CERTIFICATE-----"
-        for l in self.split(stream, 64):
+        for l in self.split(raw, 64):
             yield l
         yield "-----END CERTIFICATE-----"
 
@@ -49,15 +33,6 @@ class CTFetcher(RootStoreFetcher):
             output.write(pem)
             output.flush()
             print "\n"
-
-    def fetch_fingerprints(self, output):
-        for certificate in self.get()["certificates"]:
-            pem = "\n".join(self.make_pem(certificate))
-            print pem
-            cert = load_certificate(FILETYPE_PEM, pem)
-            output.write(cert.digest("sha256"))
-            output.write("\n")
-            output.flush()
 
 
 class GoogleAviator(CTFetcher):
@@ -87,7 +62,7 @@ class GoogleSkydiver(CTFetcher):
 
 
 if __name__ == "__main__":
-    m = GoogleRocketeer()
+    m = GooglePilot()
     m.setup()
-    m.fetch_fingerprints(sys.stdout)
+    m.fetch(sys.stdout)
 
