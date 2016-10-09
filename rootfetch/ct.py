@@ -7,6 +7,9 @@ from rootfetch.base import *
 
 from bs4 import BeautifulSoup
 
+from OpenSSL.crypto import load_certificate, FILETYPE_PEM
+
+
 
 class CTFetcher(RootStoreFetcher):
 
@@ -37,7 +40,6 @@ class CTFetcher(RootStoreFetcher):
             yield l
         yield "-----END CERTIFICATE-----"
 
-
     def get(self):
         return json.loads(urllib2.urlopen(self.URL).read())
 
@@ -47,6 +49,15 @@ class CTFetcher(RootStoreFetcher):
             output.write(pem)
             output.flush()
             print "\n"
+
+    def fetch_fingerprints(self, output):
+        for certificate in self.get()["certificates"]:
+            pem = "\n".join(self.make_pem(certificate))
+            print pem
+            cert = load_certificate(FILETYPE_PEM, pem)
+            output.write(cert.digest("sha256"))
+            output.write("\n")
+            output.flush()
 
 
 class GoogleAviator(CTFetcher):
@@ -76,7 +87,7 @@ class GoogleSkydiver(CTFetcher):
 
 
 if __name__ == "__main__":
-    m = GoogleAviator()
+    m = GoogleRocketeer()
     m.setup()
-    m.fetch(sys.stdout)
+    m.fetch_fingerprints(sys.stdout)
 
