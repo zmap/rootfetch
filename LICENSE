@@ -1,3 +1,10 @@
+rootfetch is licensed under the Apache 2.0 License. It contains compiled
+versions of extract-nss-root-certs written by Adam Langley, which is also
+Apache licensed.
+
+-------
+
+
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
