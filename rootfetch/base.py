@@ -4,6 +4,8 @@ import os
 import sys
 import subprocess
 import urllib
+import tempfile
+
 
 class RootStoreFetcher(object):
 
@@ -19,4 +21,5 @@ class RootStoreFetcher(object):
     def _make_temp_path(self, p):
         return os.path.join(self.temp_path, p)
 
-
+    def _make_temp_directory(self, suffix):
+        return tempfile.mkdtemp(suffix=suffix)
