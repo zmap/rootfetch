@@ -7,9 +7,6 @@ from rootfetch.base import *
 
 from bs4 import BeautifulSoup
 
-from OpenSSL.crypto import load_certificate, FILETYPE_PEM
-
-
 
 class CTFetcher(RootStoreFetcher):
 
@@ -65,4 +62,3 @@ if __name__ == "__main__":
     m = GooglePilot()
     m.setup()
     m.fetch(sys.stdout)
-
