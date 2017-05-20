@@ -53,7 +53,6 @@ class GoogleSkydiver(CTFetcher):
     URL = "https://ct.googleapis.com/skydiver/ct/v1/get-roots"
 
 
-
 if __name__ == "__main__":
     m = GooglePilot()
     m.setup()
