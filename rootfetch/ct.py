@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import base64
-import shutil
-import os.path
-
 import urllib2
-from rootfetch.base import *
 
-from bs4 import BeautifulSoup
+from rootfetch.base import RootStoreFetcher
 
 
 class CTFetcher(RootStoreFetcher):
-
-    @staticmethod
-    def split(input, size):
-        for start in range(0, len(input), size):
-            yield input[start:start+size]
 
     def make_pem(self, raw):
         yield "-----BEGIN CERTIFICATE-----"

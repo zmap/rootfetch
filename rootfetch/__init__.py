@@ -2,6 +2,7 @@
 """rootfetch is a set of classes and scripts for programmatically retrieving
 the root stores from common products"""
 
+# pragma pylint: disable=wildcard-import
 from .__about__ import *
 from .apple import *
 from .microsoft import *

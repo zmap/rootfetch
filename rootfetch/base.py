@@ -4,6 +4,11 @@ import os
 import tempfile
 
 
+class RootStoreFetchException(Exception):
+    """Exception thrown when a RootStoreFetcher is in an invalid state"""
+    pass
+
+
 class RootStoreFetcher(object):
     """Abstract base class for fetching a root store"""
 
@@ -15,6 +20,11 @@ class RootStoreFetcher(object):
 
     def fetch(self, output):
         raise NotImplementedError
+
+    @staticmethod
+    def split(s, size):
+        for start in range(0, len(s), size):
+            yield s[start:start+size]
 
     @staticmethod
     def _make_temp_path(suffix):
