@@ -15,7 +15,7 @@ setup(
     license = about["__license__"],
     author = about["__author__"],
     author_email = about["__email__"],
-    keywords = "python json schema bigquery elastic search",
+    keywords = "python ca root certificates",
 
     install_requires = [
         "beautifulsoup4",
@@ -29,7 +29,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'rootfetch = footfetch.__main__:main',
+            'rootfetch = rootfetch.__main__:main',
         ]
     }
 )
