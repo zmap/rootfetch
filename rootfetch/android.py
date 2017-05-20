@@ -1,12 +1,18 @@
-from rootfetch.base import RootStoreFetcher
-
+# -*- coding: utf-8 -*-
 import os
-import sh
 import sys
+
 import semver
+import sh
+
+from rootfetch.base import RootStoreFetcher
 
 
 class AndroidFetcher(RootStoreFetcher):
+    """AndroidFetcher fetches the latest Android root store.
+
+    It fetches the root store stable Android version as defined by the tags on
+    the Android platform/system/ca-certificates Git repository."""
 
     GIT_URL = "https://android.googlesource.com/platform/system/ca-certificates"
 
@@ -29,8 +35,8 @@ class AndroidFetcher(RootStoreFetcher):
                 output.write(''.join(pem_parts))
         output.flush()
 
-
-    def _latest_stable_tag(self, tags):
+    @staticmethod
+    def _latest_stable_tag(tags):
         version_revs = dict()
         for tag in tags:
             parts = tag.split('-')

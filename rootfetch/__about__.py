@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 __author__ = "ZMap Team"
 __email__ = "zmap-team@umich.edu"
 __copyright__ = "Copyright 2016 Regents of the Unversity of Michigan"

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-"""rootfetch is a set of classes and scripts for programmatically retrieving
-the root stores from common products"""
 
 import os
 import tempfile
