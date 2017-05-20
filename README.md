@@ -1,6 +1,8 @@
 Root Fetch
 ==========
 
+[![Build Status](https://travis-ci.org/zmap/rootfetch.svg?branch=master)](https://travis-ci.org/zmap/rootfetch)
+
 Root Fetch is a set of python scripts for programmatically retrieving the 
 root stores from common products. We currently support:
 
