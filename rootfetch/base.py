@@ -1,25 +1,29 @@
-import urllib2
-import json
+# -*- coding: utf-8 -*-
+"""rootfetch is a set of classes and scripts for programmatically retrieving
+the root stores from common products"""
+
 import os
-import sys
-import subprocess
-import urllib
 import tempfile
 
 
 class RootStoreFetcher(object):
+    """Abstract base class for fetching a root store"""
 
-    def __init__(self, temp_path="/tmp"):
-        self.temp_path = temp_path
-
-    def setup(self):
+    def __init__(self, *args, **kwargs):
         pass
 
-    def fetch(self, output_path):
-        raise Exception("not implemented")
+    def setup(self, *args, **kwargs):
+        pass
 
-    def _make_temp_path(self, p):
-        return os.path.join(self.temp_path, p)
+    def fetch(self, output):
+        raise NotImplementedError
 
-    def _make_temp_directory(self, suffix):
+    @staticmethod
+    def _make_temp_path(suffix):
+        """Returns a path to a not-yet-created temporary file. The path points
+        inside a newly-created temporary folder."""
+        return os.path.join(RootStoreFetcher._make_temp_directory(''), suffix)
+
+    @staticmethod
+    def _make_temp_directory(suffix):
         return tempfile.mkdtemp(suffix=suffix)
