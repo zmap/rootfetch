@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 import urllib2
 
 from rootfetch.base import RootStoreFetcher
