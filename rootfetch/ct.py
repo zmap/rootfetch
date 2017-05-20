@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import json
+import sys
 import urllib2
 
 from rootfetch.base import RootStoreFetcher
 
 
 class CTFetcher(RootStoreFetcher):
+
+    URL = None
 
     def make_pem(self, raw):
         yield "-----BEGIN CERTIFICATE-----"
@@ -21,8 +24,8 @@ class CTFetcher(RootStoreFetcher):
         for certificate in self.get()["certificates"]:
             pem = "\n".join(self.make_pem(certificate))
             output.write(pem)
+            output.write("\n")
             output.flush()
-            print "\n"
 
 
 class GoogleAviator(CTFetcher):
