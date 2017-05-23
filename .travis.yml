@@ -1,3 +1,4 @@
+os: linux
 language: python
 python:
 - 2.7
@@ -11,6 +12,9 @@ script:
 - python rootfetch/java.py > java.pem
 - python rootfetch/microsoft.py > microsoft.pem
 - python rootfetch/mozilla.py > mozilla.pem
+matrix:
+  include:
+    - os: osx
 notifications:
   slack:
     secure: fI+8Y8Xts1Rq8OOdLUGlb3ckgYGflJrvAUxWSTChCKNek9P3Qs0s24tEBuEKTbPqclAcwOiTbRpkC/wKC51pz76DMpeUtA9k4WgiRUrIsNY+fkBCVSEo37/Aq1xdWEqUhBrlYwhxvBx6A/A2xWwNxG2CBnu3kuRpqQ9vHWqE/hYmyt/DSbzzVrvOYZoMX2T+4vIeSP+FhkXj39Tc1S+HOQtQC365kI8EmvV4tZO4O9hM86xMk9K2HB7KRSfNceg+h17N/jNHyGeXaOYIYQzllKItNzg4iEj8DSmoxbccEZCiBtwbHQWdX4Emprpi7M+t69KbOdDVuCuq4YsKHDBS0przrS5NVoFZVTRAj7S0KOzoL3xZrSbEDctOyUrX/wQyfbUg049StLXZeiZW/AC6VGZSqCg1H+qdthUkKdruccJiyUcuvoSb2Whz1d6gGe+g95d/OeWxCb+16HO2piBplQbGjxq6OGQPWiSXVB9fVGeBQ5s49fPwPUefL4GDVAu5p261u2TTYlPn+AjUZ1dU4T5Gz/ZfSJUlDYe6nVl9mJVA9ivRQNTJfNfDzCqRvtTAWj4vHI6Coxiaeadp2Gsk/+PeflWV1XcKsncallH4kkH2z3ulytPMyp2blE2XV+QMJXQbggf5GgR7z23qP4EapFCpNu51Qz7hIooVVAMXYAU=
