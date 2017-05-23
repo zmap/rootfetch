@@ -1,10 +1,12 @@
 os: linux
 language: python
-sudo: required
 python:
 - 2.7
+addons:
+  apt:
+    packages:
+      - cabextract
 before_install:
-  - sudo apt-get install cabextract
   - cpanm --quiet --installdeps --notest convert::ASN1
   - cpanm --quiet --installdeps --notest JSON
   - cpanm --quiet --installdeps --notest Text::Iconv
