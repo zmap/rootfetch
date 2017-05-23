@@ -28,9 +28,8 @@ class MozillaFetcher(RootStoreFetcher):
         self._cmd = os.path.join(bin_dir, bin_name)
 
     def fetch(self, output):
-        raw_path = self._make_temp_path("rootfetch-mozilla-raw")
-        urllib.urlretrieve(self.MOZILLA_URL, raw_path)
-        output_path = self._make_temp_path("rootfetch-microsoft-cab-extracted")
+        raw_path, _ = urllib.urlretrieve(self.MOZILLA_URL)
+        output_path = self._make_temp_path("rootfetch-mozilla-extracted")
         cmd = "{!s} {!s} > {!s}".format(self._cmd, raw_path, output_path)
         subprocess.check_call(cmd, shell=True)
         with open(output_path) as fd:
