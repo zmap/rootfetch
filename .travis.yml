@@ -7,7 +7,7 @@ addons:
     packages:
       - cabextract
 before_install:
-  - yes | cpan
+  - yes "" | cpan
   - cpan -iT convert::ASN1
   - cpan -iT JSON
   - cpan -iT Text::Iconv
