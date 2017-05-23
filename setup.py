@@ -32,7 +32,6 @@ setup(
     package_data = {
         "rootfetch": [
             "bin/extract-nss-root-certs*",
-            "bin/parsectl.pl",
         ],
     },
 
