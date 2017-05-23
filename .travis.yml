@@ -6,6 +6,9 @@ python:
 - pypy
 before_install:
   - sudo apt-get install cabextract
+  - sudo cpan install Convert::ASN1
+  - sudo cpan install JSON
+  - sudo cpan install Text::Iconv
 install:
 - python setup.py install
 script:
