@@ -8,6 +8,10 @@ from rootfetch.base import RootStoreFetcher
 
 
 class CTFetcher(RootStoreFetcher):
+    """CTFetcher fetches the root store from a Certificate Transparency log.
+
+    The CT log server must comply to V1 of the CT API (RFC 6962). Subclass to
+    define the log server URL."""
 
     URL = None
 
