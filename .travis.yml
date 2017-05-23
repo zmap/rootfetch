@@ -7,9 +7,10 @@ addons:
     packages:
       - cabextract
 before_install:
-  - cpanm --quiet --installdeps --notest convert::ASN1
-  - cpanm --quiet --installdeps --notest JSON
-  - cpanm --quiet --installdeps --notest Text::Iconv
+  - cpan | yes
+  - cpan -iT convert::ASN1
+  - cpan -iT JSON
+  - cpan -iT Text::Iconv
 install:
 - python setup.py install
 script:
