@@ -29,7 +29,14 @@ setup(
         "rootfetch"
     ],
 
-    entry_points={
+    package_data = {
+        "rootfetch": [
+            "bin/extract-nss-root-certs*",
+            "bin/parsectl.pl",
+        ],
+    },
+
+    entry_points = {
         'console_scripts': [
             'rootfetch = rootfetch.__main__:main',
         ]

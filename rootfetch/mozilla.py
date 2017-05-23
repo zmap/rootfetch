@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import os.path
 import subprocess
 import sys
 import urllib
 
-from rootfetch.base import RootStoreFetcher
+from rootfetch.base import RootStoreFetcher, RootStoreFetchException
 
 
 class MozillaFetcher(RootStoreFetcher):
@@ -13,12 +14,24 @@ class MozillaFetcher(RootStoreFetcher):
 
     MOZILLA_URL = "https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt"
 
+    def __init__(self):
+        super(MozillaFetcher, self).__init__()
+        here = os.path.dirname(__file__)
+        bin_dir = os.path.join(here, "bin")
+        if sys.platform == "darwin":
+            bin_name = "extract-nss-root-certs-mac"
+        elif sys.platform in {"linux", "linux2"}:
+            bin_name = "extract-nss-root-certs-linux"
+        else:
+            msg = "unsupported platform {!s}".format(sys.platform)
+            raise RootStoreFetchException(msg)
+        self._cmd = os.path.join(bin_dir, bin_name)
+
     def fetch(self, output):
         raw_path = self._make_temp_path("rootfetch-mozilla-raw")
         urllib.urlretrieve(self.MOZILLA_URL, raw_path)
         output_path = self._make_temp_path("rootfetch-microsoft-cab-extracted")
-        cmd = "extract-nss-root-certs {!s} > {!s}".format(
-            raw_path, output_path)
+        cmd = "{!s} {!s} > {!s}".format(self._cmd, raw_path, output_path)
         subprocess.check_call(cmd, shell=True)
         with open(output_path) as fd:
             output.write(fd.read())
