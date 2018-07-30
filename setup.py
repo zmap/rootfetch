@@ -23,6 +23,7 @@ setup(
         "beautifulsoup4",
         "semver>=2.7,<3",
         "sh>=1.12,<2",
+        "pyasn1>=0.4.4"
     ],
 
     packages = [
