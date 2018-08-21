@@ -3,7 +3,6 @@
 import json
 import subprocess
 import sys
-import urllib
 import urllib2
 import binascii
 from pyasn1.type import univ, namedtype, useful
@@ -41,7 +40,7 @@ class CTL(univ.Sequence):
 class MicrosoftFetcher(RootStoreFetcher):
     """MicrosoftFetcher fetches the latest root store from Windows Update"""
 
-    CAB_URL = "http://www.download.windowsupdate.com/msdownload/update/v3/static/trustedr/en/authrootstl.cab"
+    STL_URL = "http://www.download.windowsupdate.com/msdownload/update/v3/static/trustedr/en/authroot.stl"
     CERT_DIST_POINT = "http://www.download.windowsupdate.com/msdownload/update/v3/static/trustedr/en/"
 
     def __init__(self):
@@ -54,36 +53,20 @@ class MicrosoftFetcher(RootStoreFetcher):
             yield input[start:start + size]
 
     def setup(self):
-        try:
-            subprocess.check_call(
-                "cabextract --version > /dev/null", shell=True)
-        except subprocess.CalledProcessError as e:
-            raise RootStoreFetchException("cabextract not installed")
         self._parse_ctl_path = 'parsectl.pl'
 
-    def parse_ctl(self, ctlpath):
+    def parse_ctl(self, ctl):
         dist_points = []
-        with open(ctlpath, "rb") as ctl_file:
-            ctl = ctl_file.read()
-            decoded_ctl = decoder.decode(ctl, asn1Spec=CTL())[0]
-            for entry in decoded_ctl['InnerCTL']:
-                cert_id = binascii.hexlify(entry['CertID'].asOctets())
-                dist_point = self.CERT_DIST_POINT + cert_id + ".crt"
-                dist_points.append(dist_point)
+        decoded_ctl = decoder.decode(ctl[63:], asn1Spec=CTL())[0]
+        for entry in decoded_ctl['InnerCTL']:
+            cert_id = binascii.hexlify(entry['CertID'].asOctets())
+            dist_point = self.CERT_DIST_POINT + cert_id + ".crt"
+            dist_points.append(dist_point)
         return dist_points
 
     def fetch(self, output):
-        cab_path, _ = urllib.urlretrieve(self.CAB_URL)
-        extract_path = self._make_temp_path(
-            "rootfetch-microsoft-cab-extracted")
-        extract_cmd = "cabextract -p {!s} > {!s}".format(
-            cab_path, extract_path)
-        subprocess.check_call(extract_cmd, shell=True)
-        asn_path = self._make_temp_path("rootfetch-microsoft-cab-asn")
-        cmd = "openssl asn1parse -inform D -in {!s} -strparse 63 -out {!s} > /dev/null 2>&1".format(
-            extract_path, asn_path)
-        subprocess.check_call(cmd, shell=True)
-        dist_points = self.parse_ctl(asn_path)
+        ctl = urllib2.urlopen(self.STL_URL).read()
+        dist_points = self.parse_ctl(ctl)
         for url in dist_points:
             pem = urllib2.urlopen(url).read().encode("base64").strip().replace(
                 "\t", "").replace(" ", "").replace("\n", "")

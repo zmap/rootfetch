@@ -2,10 +2,6 @@ os: linux
 language: python
 python:
 - 2.7
-addons:
-  apt:
-    packages:
-      - cabextract
 install:
 - python setup.py install
 script:

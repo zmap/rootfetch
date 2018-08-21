@@ -18,10 +18,6 @@ Requirements
 rootfetch is primarily just a wrapper around other tools, but with a common
 interface. As such, it has an eclectic set of requirements.
 
-Microsoft:
-
- - Install cabextract (e.g., `sudo apt-get install cabextract`)
-
 Mozilla:
 
  - Install extract-nss-root-certs to $PATH. Linux and Mac OS versions are included but not installed
