@@ -1,5 +1,6 @@
 *.pyc
 dist/
+env/
 rootfetch.egg-info/
 *.swp
 .DS_Store
