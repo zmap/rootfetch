@@ -17,13 +17,14 @@ bootstrap: $(VIRTUALENV_DIR)  ## set up virtual env
 .PHONY: clean
 clean:  ## reset checkout, clear virtual environment
 	rm -rf $(VIRTUALENV_DIR)
-	touch setup.py
+	touch setup.py dev-requirements.txt
 
 $(VIRTUALENV_DIR):
 	virtualenv --python=$(PYTHON) $(VIRTUALENV_DIR)
 
-$(VIRTUALENV_DIR)/.pip.log: $(VIRTUALENV_DIR) setup.py
+$(VIRTUALENV_DIR)/.pip.log: $(VIRTUALENV_DIR) setup.py dev-requirements.txt
 	$(PIP) install -e . | tee $@
+	$(PIP) install -r dev-requirements.txt | tee -a $@
 
 # via https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .PHONY: help
