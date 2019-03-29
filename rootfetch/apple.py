@@ -65,6 +65,9 @@ class AppleFetcher(RootStoreFetcher):
             full_path = os.path.join(certificates_path, f)
             if not os.path.isfile(full_path):
                 continue
+            # Skip hidden files, such as .cvsignore
+            if f.startswith('.'):
+                continue
             pem = self.make_pem(full_path)
             output.write("# ")
             output.write(f)
