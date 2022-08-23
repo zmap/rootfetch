@@ -2,7 +2,7 @@
 
 import json
 import sys
-import urllib2
+import urllib
 
 from rootfetch.base import RootStoreFetcher
 
@@ -22,7 +22,7 @@ class CTFetcher(RootStoreFetcher):
         yield "-----END CERTIFICATE-----"
 
     def get(self):
-        return json.loads(urllib2.urlopen(self.URL).read())
+        return json.loads(urllib.request.urlopen(self.URL).read())
 
     def fetch(self, output):
         for certificate in self.get()["certificates"]:
@@ -47,7 +47,7 @@ class CTUnionFetcher(RootStoreFetcher):
         yield "-----END CERTIFICATE-----"
 
     def get(self, url):
-        return json.loads(urllib2.urlopen(url).read())
+        return json.loads(urllib.request.urlopen(url).read())
 
     def fetch(self, output):
         pems = set()

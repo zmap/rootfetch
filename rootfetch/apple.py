@@ -3,8 +3,7 @@
 import base64
 import os.path
 import sys
-import urllib
-import urllib2
+import urllib.request
 
 from rootfetch.base import RootStoreFetcher
 
@@ -23,7 +22,7 @@ class AppleFetcher(RootStoreFetcher):
             yield s[start:start + size]
 
     def get_tarballs(self):
-        response = urllib2.urlopen(self.LIST_OF_TARBALLS_URL)
+        response = urllib.request.urlopen(self.LIST_OF_TARBALLS_URL)
         html = response.read()
         soup = BeautifulSoup(html, "html.parser")
         for row in soup.body.find_all("table")[0].find_all("tr"):

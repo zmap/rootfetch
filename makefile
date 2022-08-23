@@ -1,7 +1,8 @@
 VIRTUALENV_DIR ?= ./env
-PYTHON ?= python2
+PYTHON ?= python3
 PIP=$(VIRTUALENV_DIR)/bin/pip
 VIRTUAL_PYTHON=$(VIRTUALENV_DIR)/bin/python
+VIRTUALENV ?= $(PYTHON) -m venv
 
 all: help
 
@@ -20,7 +21,7 @@ clean:  ## reset checkout, clear virtual environment
 	touch setup.py dev-requirements.txt
 
 $(VIRTUALENV_DIR):
-	virtualenv --python=$(PYTHON) $(VIRTUALENV_DIR)
+	$(VIRTUALENV) $(VIRTUALENV_DIR)
 
 $(VIRTUALENV_DIR)/.pip.log: $(VIRTUALENV_DIR) setup.py dev-requirements.txt
 	$(PIP) install -e . | tee $@

@@ -3,7 +3,7 @@
 import json
 import subprocess
 import sys
-import urllib2
+import urllib.request
 import binascii
 from pyasn1.type import univ, namedtype, useful
 from pyasn1.codec.ber import decoder
@@ -65,10 +65,10 @@ class MicrosoftFetcher(RootStoreFetcher):
         return dist_points
 
     def fetch(self, output):
-        ctl = urllib2.urlopen(self.STL_URL).read()
+        ctl = urllib.request.urlopen(self.STL_URL).read()
         dist_points = self.parse_ctl(ctl)
         for url in dist_points:
-            pem = urllib2.urlopen(url).read().encode("base64").strip().replace(
+            pem = urllib.request.urlopen(url).read().encode("base64").strip().replace(
                 "\t", "").replace(" ", "").replace("\n", "")
             output.write("-----BEGIN CERTIFICATE-----\n")
             for l in self.split(pem, 64):
